@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent step event",
+  "description": "One event per agent step. Holds ids, names, numbers and times, never a prompt, a key or a user's text.",
+  "type": "object",
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "description": "One per run, the same on every event of the run."
+    },
+    "id": {
+      "type": "string",
+      "description": "One per step, unique inside the run."
+    },
+    "parent_id": {
+      "type": ["string", "null"],
+      "description": "The id of the step that started this one. Null on the first step of a run."
+    },
+    "agent": {
+      "type": "string",
+      "description": "Stable agent name, such as planner."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ok", "failed", "retry"]
+    },
+    "cost": {
+      "type": "number",
+      "description": "One currency for the whole project, set by you."
+    },
+    "latency": {
+      "type": "integer",
+      "description": "Milliseconds."
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC start time, ISO 8601."
+    }
+  },
+  "required": ["trace_id", "id", "parent_id", "agent", "status", "cost", "latency", "ts"],
+  "additionalProperties": true
+}
